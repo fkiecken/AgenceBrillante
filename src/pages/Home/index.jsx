@@ -1,6 +1,8 @@
+import '../home/style.css'
+
 function Home() {
   return (
-    <div>
+    <div className='containerHome'>
       Page d'accueil 🏡
     </div>
   )
