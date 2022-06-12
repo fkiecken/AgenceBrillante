@@ -67,12 +67,18 @@ width: 60%;
 height: auto;
 margin: auto;
 margin-top: 60px;
+border: 1px solid;
+border-color: #e9e9e9;
+border-radius: 30px;
+background-color: #fcfcfc;
 `
 const ContainerAllCards = styledComponents.div`
 display: flex;
 flex-wrap: wrap;
 width: 100%;
 height: auto;
+background-color: #000000;
+align-items: center;
 `
 
 function Freelances() {

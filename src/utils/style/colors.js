@@ -1,5 +1,5 @@
 const colors = {
-    backgroundHover : '54b3d6',
+    backgroundHover : 'a0cecb',
 }
 
 export default colors

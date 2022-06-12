@@ -15,6 +15,12 @@ const GlobalStyle = createGlobalStyle`
   div {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
   }
+
+  h1 {
+    color: #7c6d51;
+    padding-top: 20px;
+    padding-left: 20px;
+  }
 `
 
 root.render(

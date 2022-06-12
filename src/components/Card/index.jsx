@@ -12,17 +12,24 @@ const ImageCard = styledComponents.img`
 `
 
 const ContainerCard = styledComponents.div`
+    color: #ffffff;
     width: 150px;
     height: 220px;
-    background-color: rgb(233, 233, 233);
+    background-color: #a0cecb;
+    box-shadow: inset 0 0 0 0 #7c6d51;
     margin: 10px;
     border-radius: 15px;
     text-align: center;
-    font-family: Arial;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: color 0.3s ease-in-out, box-shadow 3s ease-in-out;
+    text-align: center;
     &:hover {
         cursor: pointer;
-        -webkit-box-shadow: 2px 2px 18px -9px #e2e3e9; 
-        box-shadow: 2px 2px 10px #e2e3e9;
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+        box-shadow: inset 400px 0 0 0 #7c6d51;
+        color: white;
     }
 `
 
