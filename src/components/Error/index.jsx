@@ -1,10 +1,18 @@
-import '../Error/style.css'
+import styledComponents from "styled-components"
+
+const ContainerError = styledComponents.div`
+width: 60%;
+height: auto;
+margin: auto;
+margin-top: 60px;
+text-align: center;
+`
 
 function Error() {
     return (
-        <div className='containerError'>
+        <ContainerError>
             <h1>ERREUR 404 ZEBI</h1>
-        </div>
+        </ContainerError>
     )
 }
 

@@ -1,10 +1,17 @@
-import '../home/style.css'
+import styledComponents from "styled-components"
+
+const ContainerHome = styledComponents.div`
+width: 60%;
+height: auto;
+margin: auto;
+margin-top: 60px;
+`
 
 function Home() {
   return (
-    <div className='containerHome'>
+    <ContainerHome>
       Page d'accueil 🏡
-    </div>
+    </ContainerHome>
   )
 }
 
