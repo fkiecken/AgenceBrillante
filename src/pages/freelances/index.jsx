@@ -73,12 +73,12 @@ border-radius: 30px;
 background-color: #fcfcfc;
 `
 const ContainerAllCards = styledComponents.div`
-display: flex;
-flex-wrap: wrap;
-width: 100%;
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+width: 98%;
 height: auto;
-background-color: #000000;
-align-items: center;
+margin-right: auto;
+margin-left: auto;
 `
 
 function Freelances() {

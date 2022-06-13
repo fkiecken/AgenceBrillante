@@ -13,24 +13,44 @@ width: 60%;
 height: auto;
 margin: auto;
 margin-top: 60px;
+border: 1px solid;
+border-color: #e9e9e9;
+border-radius: 30px;
+background-color: #fcfcfc;
+text-align: center;
 `
 const PrecedentButtonDisable = styledComponents(Link)`
-box-shadow:inset 0px 1px 0px 0px #ffffff;
-background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-background-color:#ffffff;
-border-radius:6px;
-border:1px solid #dcdcdc;
-display:inline-block;
-cursor:pointer;
-color:#ffffff;
-font-family:Arial;
-font-size:15px;
-font-weight:bold;
-padding:6px 24px;
-text-decoration:none;
-text-shadow:0px 1px 0px #ffffff;
+color: transparent;
 pointer-events: none;
-margin: 5px;
+padding:20px 80px;
+`
+
+const QuestionTitle = styledComponents.h2`
+text-decoration: underline;
+text-decoration-color: #a0cecb;
+`
+
+const ContainerQuestion = styledComponents.div`
+width: 60%;
+height: auto;
+text-align: center;
+margin: 0 auto;
+padding: 40px;
+`
+
+const ButtonQuestion = styledComponents.button`
+width: 200px;
+height: 100px;
+background-color: white;
+border: solid 2px;
+border-color: #a0cecb;
+border-radius: 30px;
+margin: 20px;
+cursor:pointer;
+transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+&:hover {
+  box-shadow: inset 600px 0 0 0 #a0cecb;
+}
 `
 
 useEffect(() => {
@@ -39,17 +59,24 @@ useEffect(() => {
   } else {
     setShowResult(false)
   }
-  if(parseInt(questionNumber) === 0) {
+  if(parseInt(questionNumber) === 1) {
     setPrecedentButtonEnable(false)
   } else {
     setPrecedentButtonEnable(true)
   }
 }, [questionNumber])
 
+function Zizi() {
+  alert("zizi")
+}
+
   return (
     <ContainerSurvey>
-      <h1>Questionnaire</h1>
-      <h2>Question : { questionNumber }</h2>
+      <QuestionTitle>Question n°{ questionNumber }</QuestionTitle>
+      <ContainerQuestion>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mi elit, laoreet vel mi vitae, consectetur fringilla eros. Mauris sit amet scelerisque quam, quis finibus est. Suspendisse eu felis odio. Donec semper tristique purus, id malesuada felis venenatis vitae. Ut in mauris a dui fringilla rutrum ?</ContainerQuestion>
+      <ButtonQuestion onClick={() => Zizi()}>Oui</ButtonQuestion>
+      <ButtonQuestion onClick={() => Zizi()}>Non</ButtonQuestion>
+      <br/><br/><br/>
       {
         precedentButtonEnable === true ?
         <Link to={'/survey/' + (parseInt(questionNumber)-1)} className='button'>Précédent</Link> :
@@ -61,6 +88,7 @@ useEffect(() => {
         <Link to={'/result/'} className='button'>Résultat</Link>
 
       }
+      <br/><br/>
     </ContainerSurvey>
   )
 }

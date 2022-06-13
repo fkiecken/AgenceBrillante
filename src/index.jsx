@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    color: #7c6d51;
+    color: #a0cecb;
     padding-top: 20px;
     padding-left: 20px;
   }
