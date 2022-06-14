@@ -45,7 +45,7 @@ border-radius: 30px;
 }
 `
 
-const LinkHeaderTest = styledComponents(Link)`
+const LinkHeaderDoTheTest = styledComponents(Link)`
 font-size: 14px;
 font-family: Arial, Helvetica, sans-serif;
 box-shadow: inset 0 0 0 0 #${colors.backgroundHover};
@@ -74,7 +74,7 @@ function Header() {
                     <br/>
                     <LinkHeader to="/">ACCEUIL</LinkHeader>
                     <LinkHeader to="/freelances">NOS INDÉPENDANTS</LinkHeader>
-                    <LinkHeaderTest to="/survey/1">FAITES LE TESTE !</LinkHeaderTest>
+                    <LinkHeaderDoTheTest to="/survey/1">FAITES LE TEST !</LinkHeaderDoTheTest>
                 </nav>
             </ContainerLink>
         </ContainerHeader>

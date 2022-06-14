@@ -1,4 +1,5 @@
 import styledComponents from "styled-components"
+import { Link } from 'react-router-dom'
 
 const ContainerResult = styledComponents.div`
 width: 60%;
@@ -28,14 +29,14 @@ color: black;
 font-size: 24px;
 `
 
-const ButtonChooseFreelance = styledComponents.button`
-width: 300px;
-height: 25px;
+const ButtonChooseFreelance = styledComponents(Link)`
+padding-left: 115px;
+padding-right: 115px;
 background-color: #a0cecb;
 border-radius: 30px;
+text-decoration: none;
 border: none;
 color: white;
-margin: 40px;
 cursor:pointer;
 `
 
@@ -54,7 +55,8 @@ function Result() {
         <ContainerResult>
             <ContainerTitle>
                 <TitleH2>Les compétences dont vous avez besoin : </TitleH2><NeededCompetences>UX Design, Frontend, Backend</NeededCompetences>
-                <ButtonChooseFreelance>Choisir quelqu'un possédant ses compétences !</ButtonChooseFreelance>
+                <br/><br/>
+                <ButtonChooseFreelance to={'/freelances'}>Choisir quelqu'un possédant ses compétences !</ButtonChooseFreelance>
             </ContainerTitle>
             <ContainerCompetenceDescription>
                 <TitleDescription>UX Design</TitleDescription>
