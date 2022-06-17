@@ -2,12 +2,8 @@ import { useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import styledComponents from 'styled-components'
 import '../survey/style.css'
+import { Loader } from '../../utils/Atom'
 
-function Survey() {
-
-var { questionNumber } = useParams()
-const [showResult, setShowResult] = useState(false)
-const [precedentButtonEnable, setPrecedentButtonEnable] = useState(true)
 const ContainerSurvey = styledComponents.div`
 width: 60%;
 height: auto;
@@ -19,17 +15,10 @@ border-radius: 30px;
 background-color: #fcfcfc;
 text-align: center;
 `
-const PrecedentButtonDisable = styledComponents(Link)`
-color: transparent;
-pointer-events: none;
-padding:20px 80px;
-`
-
 const QuestionTitle = styledComponents.h2`
 text-decoration: underline;
 text-decoration-color: #a0cecb;
 `
-
 const ContainerQuestion = styledComponents.div`
 width: 60%;
 height: auto;
@@ -37,7 +26,6 @@ text-align: center;
 margin: 0 auto;
 padding: 40px;
 `
-
 const ButtonQuestion = styledComponents.button`
 width: 200px;
 height: 100px;
@@ -53,42 +41,48 @@ transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 `
 
-useEffect(() => {
-  if(parseInt(questionNumber) === 10) {
-    setShowResult(true)
-  } else {
-    setShowResult(false)
-  }
-  if(parseInt(questionNumber) === 1) {
-    setPrecedentButtonEnable(false)
-  } else {
-    setPrecedentButtonEnable(true)
-  }
-}, [questionNumber])
+function Survey() {
 
-function Zizi() {
-  alert("zizi")
-}
+const { questionNumber } = useParams()
+const questionNumberInt = parseInt(questionNumber)
+const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1
+const nextQuestionNumber = questionNumberInt + 1
+const [surveyData, setSurveyData] = useState({})
+const [isDataLoading, setIsDataLoading] = useState(false)
+
+useEffect(() => {
+  setIsDataLoading(true)
+  fetch('http://localhost:8000/survey')
+    .then((response) => response.json())
+    .then(({ surveyData }) => {
+      setSurveyData(surveyData)
+      setIsDataLoading(false)
+    }
+  )
+}, [])
 
   return (
     <ContainerSurvey>
       <QuestionTitle>Question n°{ questionNumber }</QuestionTitle>
-      <ContainerQuestion>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mi elit, laoreet vel mi vitae, consectetur fringilla eros. Mauris sit amet scelerisque quam, quis finibus est. Suspendisse eu felis odio. Donec semper tristique purus, id malesuada felis venenatis vitae. Ut in mauris a dui fringilla rutrum ?</ContainerQuestion>
-      <ButtonQuestion onClick={() => Zizi()}>Oui</ButtonQuestion>
-      <ButtonQuestion onClick={() => Zizi()}>Non</ButtonQuestion>
-      <br/><br/><br/>
       {
-        precedentButtonEnable === true ?
-        <Link to={'/survey/' + (parseInt(questionNumber)-1)} className='button'>Précédent</Link> :
-        <PrecedentButtonDisable to={'/survey/' + (parseInt(questionNumber)-1)}>Précédent</PrecedentButtonDisable>
-      }      
-      {
-        showResult === false ?
-        <Link to={'/survey/' + (parseInt(questionNumber)+1)} className='button'>Suivant</Link> :
-        <Link to={'/result/'} className='button'>Résultat</Link>
-
+        isDataLoading === true ?
+        (
+          <div>
+            <br/>
+            <Loader/>
+            <br/>
+          </div>
+        ) :
+        (
+          <ContainerQuestion>{surveyData[questionNumberInt]}</ContainerQuestion>
+        )
       }
-      <br/><br/>
+      <Link to={`/survey/${prevQuestionNumber}`}><ButtonQuestion>Précédent</ButtonQuestion></Link>
+      {
+        questionNumberInt !== 6 ? 
+          ( <Link to={`/survey/${nextQuestionNumber}`}><ButtonQuestion>Suivant</ButtonQuestion></Link> ) :
+          ( <Link to="../result"><ButtonQuestion>Résultats</ButtonQuestion></Link> )
+      }
     </ContainerSurvey>
   )
 }
