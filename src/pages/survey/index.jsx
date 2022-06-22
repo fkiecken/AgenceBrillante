@@ -69,7 +69,7 @@ useEffect(() => {
         (
           <div>
             <br/>
-            <Loader/>
+              <Loader/>
             <br/>
           </div>
         ) :

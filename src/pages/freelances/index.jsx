@@ -1,66 +1,8 @@
 import Card from '../../components/Card'
-import DefaultPicture from '../../assets/img/pitre.png'
+import { Loader } from '../../utils/Atom'
 import styledComponents from 'styled-components'
-
-const freelanceProfiles = [
-    {
-        name: 'Jane Doe',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Developpeur frontend',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Developpeur frontend',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Developpeur frontend',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture,
-    },
-]
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const ContainerFreelances = styledComponents.div`
 width: 60%;
@@ -77,26 +19,53 @@ display: grid;
 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 width: 98%;
 height: auto;
-margin-right: auto;
-margin-left: auto;
+margin: auto;
 `
 
 function Freelances() {
+
+    const [freelancersList, setfreelancersList] = useState({})
+    const [isDataLoading, setIsDataLoading] = useState(true)
+
+    useEffect(() => {
+            setIsDataLoading(true)
+            fetch('http://localhost:8000/freelances')
+                .then((response) => response.json())
+                .then(({ freelancersList }) => {
+                    setfreelancersList(freelancersList)
+                    setIsDataLoading(false)
+                })
+                .catch((error) => {
+                    console.log(error)
+                    alert("PROBLEME DE DATA : " + error)
+                })
+    }, [])
+
     return (
         <ContainerFreelances>
             <h1>NOS INDÉPENDANTS 🙏🤸‍♂️💯🔥 : </h1>
-            <ContainerAllCards>
             {
-                freelanceProfiles.map((profile, index) => (
-                    <Card
-                        key={profile.name + index}
-                        label={profile.jobTitle}
-                        picture={profile.picture}
-                        title={profile.name}    
-                    />
-                ))
+                isDataLoading === true ? (
+                    <div>
+                        <br/>
+                            <Loader/>
+                        <br/>
+                    </div>
+                ) : (
+                    <ContainerAllCards> 
+                        {
+                            freelancersList.map((profile, index) => (
+                                <Card
+                                    key={profile.name + index}
+                                    label={profile.job}
+                                    picture={profile.picture}
+                                    title={profile.name}   
+                                />
+                            ))
+                        }
+                    </ContainerAllCards>
+                )
             }
-            </ContainerAllCards>
         </ContainerFreelances>
     )
 }

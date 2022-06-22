@@ -2,15 +2,15 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styledComponents from 'styled-components'
 
-const CardLabel = styledComponents.span`
+const CardLabel = styledComponents.div`
     font-weight: bold;
+    height: 30px;
 `
-
 const ImageCard = styledComponents.img`
     width: 100px;
     height: 100px;
+    border-radius: 50% 20% / 10% 40%;
 `
-
 const ContainerCard = styledComponents.div`
     color: #ffffff;
     width: 150px;
@@ -37,7 +37,7 @@ const ContainerCard = styledComponents.div`
 function Card({ label, title, picture}) {
     return (
         <ContainerCard>
-            <br/><CardLabel>{ label }</CardLabel><br/><br/>
+            <br/><CardLabel>{ label }</CardLabel><br/>
             <ImageCard src={picture} alt="freelance"/><br/><br/>
             <span>{ title }</span>
         </ContainerCard>
