@@ -1,5 +1,5 @@
 import Illustration from '../../assets/img/home.png'
-import styledComponents from "styled-components"
+import styledComponents from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const ContainerHome = styledComponents.div`
@@ -11,46 +11,59 @@ const ContainerHome = styledComponents.div`
   border-color: #e9e9e9;
   border-radius: 30px;
   background-color: #fcfcfc;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 `
-const HomeImage = styledComponents.img`
-  width: 60%;
-  height: 60%;
-  margin-left: 30%;
+const ContainerRight = styledComponents.div`
+  grid-area: 1 / 2 / 2 / 3;
 `
-const ContainerText = styledComponents.div`
-  width: 30%;
-  height: auto;
-  position: absolute;
-  top: 30%;
-  margin-left: 20px;
+const ContainerLeft = styledComponents.div`
+  grid-area: 1 / 1 / 2 / 2;
 `
-const Title = styledComponents.h1`
+const Title = styledComponents.div`
   color: #a0cecb;
-  padding-top: 20px;
-  padding-left: 20px;
   font-size: 34px;
   line-height: 50px;
+  margin-top: 15%;
+  margin-left: 10%;
+  margin-bottom: 3%;
+  max-width: 330px;
+  min-width; 20px;
 `
 const ButtonToSurvey = styledComponents(Link)`
-  padding-left: 115px;
-  padding-right: 115px;
+  padding-left: 15%;
+  padding-right: 15%;
   background-color: #a0cecb;
   border-radius: 30px;
   text-decoration: none;
   border: none;
   color: white;
   cursor:pointer;
-  margin-left: 20px;
+  margin-left: 10%;
+  margin-bottom: 5%;
+`
+const HomeImage = styledComponents.img`
+width: 100%;
+height: 100%
 `
 
 function Home() {
   return (
     <ContainerHome>
-      <ContainerText>
-        <Title>Repérez vos besoins,<br/>on s'occupe du reste,<br/>avec les meilleurs<br/>talents</Title>
+      <ContainerLeft>
+        <Title>
+          Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents
+        </Title>
         <ButtonToSurvey to="/survey/1">Faire le test</ButtonToSurvey>
-      </ContainerText>
-      <HomeImage src={Illustration}/>
+        <br />
+        <br />
+      </ContainerLeft>
+      <ContainerRight>
+        <HomeImage src={Illustration} />
+      </ContainerRight>
     </ContainerHome>
   )
 }
