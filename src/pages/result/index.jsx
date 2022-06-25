@@ -12,23 +12,19 @@ border-radius: 30px;
 background-color: #fcfcfc;
 text-align: center;
 `
-
 const ContainerTitle = styledComponents.div`
 width: 50%;
 margin: 0 auto;
 margin-top: 60px;
 `
-
 const NeededCompetences = styledComponents.span`
 color: #a0cecb;
 font-size: 24px;
 `
-
 const TitleH2 = styledComponents.span`
 color: black;
 font-size: 24px;
 `
-
 const ButtonChooseFreelance = styledComponents(Link)`
 padding-left: 115px;
 padding-right: 115px;
@@ -39,13 +35,11 @@ border: none;
 color: white;
 cursor:pointer;
 `
-
 const ContainerCompetenceDescription = styledComponents.div`
 width: 80%;
 height: auto;
 margin: 0 auto;
 `
-
 const TitleDescription = styledComponents.h2`
 color: #a0cecb;
 `

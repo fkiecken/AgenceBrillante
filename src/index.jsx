@@ -2,6 +2,7 @@ import React from 'react'
 import Home from './pages/home'
 import Survey from './pages/survey'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Error from './components/Error'
 import Result from './pages/result'
 import Freelances from './pages/freelances'
@@ -35,6 +36,7 @@ root.render(
       <Route exact path="/freelances" element={<Freelances />} />
       <Route path="*" element={<Error />} />
     </Routes>
+    <Footer/>
   </BrowserRouter>
 </React.StrictMode>
 )

@@ -12,13 +12,11 @@ const ContainerHome = styledComponents.div`
   border-radius: 30px;
   background-color: #fcfcfc;
 `
-
 const HomeImage = styledComponents.img`
   width: 60%;
   height: 60%;
   margin-left: 30%;
 `
-
 const ContainerText = styledComponents.div`
   width: 30%;
   height: auto;
@@ -26,7 +24,6 @@ const ContainerText = styledComponents.div`
   top: 30%;
   margin-left: 20px;
 `
-
 const Title = styledComponents.h1`
   color: #a0cecb;
   padding-top: 20px;
@@ -34,7 +31,6 @@ const Title = styledComponents.h1`
   font-size: 34px;
   line-height: 50px;
 `
-
 const ButtonToSurvey = styledComponents(Link)`
   padding-left: 115px;
   padding-right: 115px;
