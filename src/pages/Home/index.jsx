@@ -1,5 +1,7 @@
 import Illustration from '../../assets/img/home.png'
 import styledComponents from 'styled-components'
+import { useContext } from 'react'
+import { ThemeContext } from '../../utils/context'
 import { Link } from 'react-router-dom'
 
 const ContainerHome = styledComponents.div`
@@ -8,9 +10,12 @@ const ContainerHome = styledComponents.div`
   margin: auto;
   margin-top: 60px;
   border: 1px solid;
-  border-color: #e9e9e9;
+  border-color: #${({ isDarkMode }) =>
+    isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
+
   border-radius: 30px;
-  background-color: #fcfcfc;
+  background-color: #${({ isDarkMode }) =>
+    isDarkMode === 'light' ? 'fcfcfc' : '999999'};
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
@@ -51,8 +56,10 @@ height: 100%
 `
 
 function Home() {
+  const { theme } = useContext(ThemeContext)
+
   return (
-    <ContainerHome>
+    <ContainerHome isDarkMode={theme}>
       <ContainerLeft>
         <Title>
           Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents

@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import StyledComponent from 'styled-components'
+import { ThemeContext } from '../../utils/context'
 
 const FooterContainer = StyledComponent.div`
 width: 100%;
 height: 120px;
-background: rgb(255,255,255);
-background: linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(252,252,252,1) 100%);border-top: 1px solid;
-border-color: #e9e9e9;
+background: ${({ isDarkMode }) =>
+  isDarkMode === 'light'
+    ? 'linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(252,252,252,1) 100%)'
+    : 'linear-gradient(180deg, rgba(142,142,142,1) 0%, rgba(88,88,88,1) 100%)'};
+border-top: 1px solid;
+border-color: #${({ isDarkMode }) =>
+  isDarkMode === 'light' ? 'e9e9e9' : '303030'};
 margin-top: 60px;
 `
 const Content = StyledComponent.div`
@@ -17,7 +22,7 @@ margin: 0 auto;
 margin-top: 40px;
 `
 const DarkModeButton = StyledComponent.button`
-width: 150px;
+width: 50px;
 height: 50px;
 border-radius: 25px;
 border: none;
@@ -25,31 +30,16 @@ color: white;
 cursor:pointer;
 background-color: #575757;
 `
-const LightModeButton = StyledComponent.button`
-width: 150px;
-height: 50px;
-border-radius: 25px;
-border: none;
-color: black;
-cursor:pointer;
-background-color: #D4D4D4;
-`
 
 function Footer() {
-  const [activeTheme, setActiveTheme] = useState(false)
+  const { toggleTheme, theme } = useContext(ThemeContext)
 
   return (
-    <FooterContainer>
+    <FooterContainer isDarkMode={theme}>
       <Content>
-        {activeTheme === false ? (
-          <DarkModeButton onClick={() => setActiveTheme(!activeTheme)}>
-            Mode clair
-          </DarkModeButton>
-        ) : (
-          <LightModeButton onClick={() => setActiveTheme(!activeTheme)}>
-            Mode sombre
-          </LightModeButton>
-        )}
+        <DarkModeButton onClick={() => toggleTheme()}>
+          {theme === 'light' ? '☀️' : '🌙'}
+        </DarkModeButton>
         <br />
         <br />© AgenceBrillante 2022 - Tous droits réservés
         <br />
