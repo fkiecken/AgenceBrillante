@@ -1,6 +1,6 @@
 import styledComponents from 'styled-components'
 import { Link } from 'react-router-dom'
-import { ThemeContext } from '../../utils/context'
+import { ThemeContext, SurveyContext } from '../../utils/context'
 import { useContext } from 'react'
 
 const ContainerResult = styledComponents.div`
@@ -50,9 +50,11 @@ color: #a0cecb;
 
 function Result() {
   const { theme } = useContext(ThemeContext)
+  const { resultSurvey } = useContext(SurveyContext)
+  console.log(resultSurvey)
 
   return (
-    <ContainerResult>
+    <ContainerResult isDarkMode={theme}>
       <ContainerTitle>
         <TitleH2>Les compétences dont vous avez besoin : </TitleH2>
         <NeededCompetences>UX Design, Frontend, Backend</NeededCompetences>

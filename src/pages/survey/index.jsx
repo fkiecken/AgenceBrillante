@@ -4,6 +4,7 @@ import styledComponents from 'styled-components'
 import '../survey/style.css'
 import { Loader } from '../../utils/Atom'
 import { ThemeContext } from '../../utils/context'
+import { SurveyContext } from '../../utils/context'
 
 const ContainerSurvey = styledComponents.div`
 width: 60%;
@@ -43,6 +44,18 @@ transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
   box-shadow: inset 600px 0 0 0 #a0cecb;
 }
 `
+const AnswerQuestionButton = styledComponents.button`
+width: 100px;
+height: 50px;
+border: solid 2px;
+border-color: #a0cecb;
+border-radius: 30px;
+margin: 60px;
+cursor:pointer;
+transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+background-color: ${({ backgroundColorAnswerButton }) =>
+  backgroundColorAnswerButton === false ? 'white' : '#a0cecb'};
+`
 
 function Survey() {
   const { questionNumber } = useParams()
@@ -52,6 +65,9 @@ function Survey() {
   const [surveyData, setSurveyData] = useState({})
   const [isDataLoading, setIsDataLoading] = useState(false)
   const { theme } = useContext(ThemeContext)
+  const { resultSurvey } = useContext(SurveyContext)
+  const [statutYesAnswerButton, setstatutYesAnswerButton] = useState(false)
+  const [statutNoAnswerButton, setstatutNoAnswerButton] = useState(false)
 
   useEffect(() => {
     setIsDataLoading(true)
@@ -62,6 +78,37 @@ function Survey() {
         setIsDataLoading(false)
       })
   }, [])
+
+  function setAnswerQuestion(valueButton) {
+    if (valueButton === 'oui') {
+      if (statutYesAnswerButton === false) {
+        setstatutYesAnswerButton(true)
+        setstatutNoAnswerButton(false)
+      } else {
+        if (statutYesAnswerButton === true) {
+          setstatutYesAnswerButton(false)
+        }
+      }
+      resultSurvey[questionNumber - 1].answerQuestion = 'oui'
+    } else {
+      if (valueButton === 'non') {
+        if (statutNoAnswerButton === false) {
+          setstatutNoAnswerButton(true)
+          setstatutYesAnswerButton(false)
+        } else {
+          if (statutNoAnswerButton === true) {
+            setstatutNoAnswerButton(false)
+          }
+        }
+        resultSurvey[questionNumber - 1].answerQuestion = 'non'
+      }
+    }
+  }
+
+  function resetAnswerButton() {
+    setstatutYesAnswerButton(false)
+    setstatutNoAnswerButton(false)
+  }
 
   return (
     <ContainerSurvey isDarkMode={theme}>
@@ -75,12 +122,29 @@ function Survey() {
       ) : (
         <ContainerQuestion>{surveyData[questionNumberInt]}</ContainerQuestion>
       )}
+      <AnswerQuestionButton
+        backgroundColorAnswerButton={statutYesAnswerButton}
+        onClick={() => setAnswerQuestion('oui')}
+      >
+        Oui
+      </AnswerQuestionButton>
+      <AnswerQuestionButton
+        backgroundColorAnswerButton={statutNoAnswerButton}
+        onClick={() => setAnswerQuestion('non')}
+      >
+        Non
+      </AnswerQuestionButton>
+      <br />
       <Link to={`/survey/${prevQuestionNumber}`}>
-        <ButtonQuestion>Précédent</ButtonQuestion>
+        <ButtonQuestion onClick={() => resetAnswerButton()}>
+          Précédent
+        </ButtonQuestion>
       </Link>
       {questionNumberInt !== 6 ? (
         <Link to={`/survey/${nextQuestionNumber}`}>
-          <ButtonQuestion>Suivant</ButtonQuestion>
+          <ButtonQuestion onClick={() => resetAnswerButton()}>
+            Suivant
+          </ButtonQuestion>
         </Link>
       ) : (
         <Link to="../result">
