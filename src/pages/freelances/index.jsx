@@ -8,7 +8,7 @@ const ContainerFreelances = styledComponents.div`
 width: 60%;
 height: auto;
 margin: auto;
-margin-top: 60px;
+margin-top: 10px;
 border: 1px solid;
 border-radius: 30px;
 border-color: #${({ isDarkMode }) =>
