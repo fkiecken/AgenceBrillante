@@ -43,6 +43,20 @@ transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
   box-shadow: inset 600px 0 0 0 #a0cecb;
 }
 `
+const AnswerQuestionButton = styledComponents.button`
+width: 100px;
+height: 50px;
+background-color: white;
+border: solid 2px;
+border-color: #a0cecb;
+border-radius: 30px;
+margin: 60px;
+cursor:pointer;
+transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
+&:active {
+  background-color: black;
+}
+`
 
 function Survey() {
   const { questionNumber } = useParams()
@@ -75,6 +89,9 @@ function Survey() {
       ) : (
         <ContainerQuestion>{surveyData[questionNumberInt]}</ContainerQuestion>
       )}
+      <AnswerQuestionButton>Oui</AnswerQuestionButton>
+      <AnswerQuestionButton>Non</AnswerQuestionButton>
+      <br/>
       <Link to={`/survey/${prevQuestionNumber}`}>
         <ButtonQuestion>Précédent</ButtonQuestion>
       </Link>

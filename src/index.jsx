@@ -10,6 +10,7 @@ import { ThemeProvider } from './utils/context'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import GlobalStyle from './utils/style/GlobalStyle'
+import { SurveyProdvider } from './utils/context'
 
 const rootElement = document.getElementById('root')
 const root = createRoot(rootElement)
@@ -19,6 +20,7 @@ root.render(
     <BrowserRouter>
       <ThemeProvider>
         <GlobalStyle />
+        <SurveyProdvider/>
         <Header />
         <Routes>
           <Route exact path="/" element={<Home />} />
