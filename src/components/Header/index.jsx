@@ -1,26 +1,27 @@
-import { Link } from "react-router-dom";
-import colors from "../../utils/style/colors";
+import { Link } from 'react-router-dom'
+import colors from '../../utils/style/colors'
 import logo from '../../assets/img/logo.png'
-import styledComponents from "styled-components";
+import styledComponents from 'styled-components'
 
 const ContainerHeader = styledComponents.div`
 width: 60%;
-height: 50px;
+height: 80px;
 top: 0;
 margin: 0 auto;
+margin-top: 15px;
 `
 const ContainerLogo = styledComponents.div`
 width: 25%;
-height: 50px;
-text-align: center;
+height: auto;
 float: left;
-margin-top: 15px
 `
 const ContainerLink = styledComponents.div`
-width: 430px;
-height: 50px;
+width: 75%;
+min-width: 420px;
+height: auto;
 text-align: right;
 float: right;
+margin-top: 8px;
 `
 const LinkHeader = styledComponents(Link)`
 font-size: 14px;
@@ -31,7 +32,10 @@ color: #ffffff;
 padding: 10px;
 transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
 text-decoration: none;
-margin: 5px;
+margin-right: 5px;
+margin-left: 5px;
+margin-top: 0px;
+margin-bottom: 0px;
 border-radius: 30px;
 &:hover {
     font-size: 14px;
@@ -50,7 +54,10 @@ color: #ffffff;
 padding: 10px;
 transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
 text-decoration: none;
-margin: 5px;
+margin-right: 5px;
+margin-left: 5px;
+margin-top: 0px;
+margin-bottom: 0px;
 border-radius: 30px;
 &:hover {
     font-size: 14px;
@@ -61,20 +68,22 @@ border-radius: 30px;
 `
 
 function Header() {
-
-    return (
-        <ContainerHeader>
-            <ContainerLogo> <img src={logo} alt="Logo" /></ContainerLogo>
-            <ContainerLink>
-                <nav>
-                    <br/>
-                    <LinkHeader to="/">ACCEUIL</LinkHeader>
-                    <LinkHeader to="/freelances">NOS INDÉPENDANTS</LinkHeader>
-                    <LinkHeaderDoTheTest to="/survey/1">FAITES LE TEST !</LinkHeaderDoTheTest>
-                </nav>
-            </ContainerLink>
-        </ContainerHeader>
-    )
+  return (
+    <ContainerHeader>
+      <ContainerLogo>
+        <img src={logo} alt="Logo" />
+      </ContainerLogo>
+      <ContainerLink>
+        <nav>
+          <LinkHeader to="/">ACCEUIL</LinkHeader>
+          <LinkHeader to="/freelances">NOS INDÉPENDANTS</LinkHeader>
+          <LinkHeaderDoTheTest to="/survey/1">
+            FAITES LE TEST !
+          </LinkHeaderDoTheTest>
+        </nav>
+      </ContainerLink>
+    </ContainerHeader>
+  )
 }
 
 export default Header

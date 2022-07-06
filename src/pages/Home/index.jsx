@@ -8,7 +8,7 @@ const ContainerHome = styledComponents.div`
   width: 60%;
   height: auto;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 10px;
   border: 1px solid;
   border-color: #${({ isDarkMode }) =>
     isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
