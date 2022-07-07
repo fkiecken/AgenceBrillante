@@ -2,6 +2,8 @@ import styledComponents from 'styled-components'
 import { Link } from 'react-router-dom'
 import { ThemeContext, SurveyContext } from '../../utils/context'
 import { useContext } from 'react'
+import { useFetch } from '../../utils/hooks'
+import { Loader } from '../../utils/Atom'
 
 const ContainerResult = styledComponents.div`
 width: 60%;
@@ -48,44 +50,60 @@ const TitleDescription = styledComponents.h2`
 color: #a0cecb;
 `
 
+function formatQueryParams(resultSurvey) {
+  const answerNumbers = []
+  resultSurvey.map((result) => (
+    answerNumbers.push(result.questionNumber)
+  ))
+  
+  return answerNumbers.reduce((previousParams, answerNumber, index) => {
+      const isFirstAnswer = index === 0
+      const separator = isFirstAnswer ? '' : '&'
+      if(resultSurvey[(answerNumber-1)].answerQuestion === 'oui') {
+      return `${previousParams}${separator}a${answerNumber}=${resultSurvey[answerNumber]}`
+    }
+  }, '')
+}
+
 function Result() {
   const { theme } = useContext(ThemeContext)
   const { resultSurvey } = useContext(SurveyContext)
+  const queryParams = formatQueryParams(resultSurvey)
+
+  const { data, loading, error} = useFetch(
+    `http://localhost:8000/results?${queryParams}`
+  )
+
+ console.log(data)
 
   return (
     <ContainerResult isDarkMode={theme}>
       <ContainerTitle>
         <TitleH2>Les compétences dont vous avez besoin : </TitleH2>
-        <NeededCompetences>UX Design, Frontend, Backend</NeededCompetences>
         <br />
         <br />
         <ButtonChooseFreelance to={'/freelances'}>
           Choisir quelqu'un possédant ses compétences !
         </ButtonChooseFreelance>
       </ContainerTitle>
-      <ContainerCompetenceDescription>
-        <TitleDescription>UX Design</TitleDescription>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lacinia nec
-        risus eu fringilla. Phasellus dapibus nunc metus, eget lobortis nisi
-        porta in.
-        <TitleDescription>Frontend</TitleDescription>
-        Mauris eget iaculis nisl. Proin sit amet nunc volutpat, fermentum nibh
-        in, iaculis felis. Ut sit amet urna diam. Quisque ornare mauris libero,
-        vitae lobortis ex pellentesque in.
-        <TitleDescription>Backend</TitleDescription>
-        Ut sagittis sodales interdum. Aliquam tincidunt, dui id ullamcorper
-        blandit, sem nunc auctor libero, non laoreet ex magna id ipsum.
-      </ContainerCompetenceDescription>
+      {
+          loading === true ? (
+            <div>
+              <br />
+                <Loader />
+              <br />
+            </div>
+          ) : (
+            data.resultsData.map((comp) => (
+              <div>
+                <TitleDescription>{comp.title}</TitleDescription>
+                <p>{comp.description}</p>
+              </div>
+          ))
+          )
+        }
       <br />
       <br />
-      {resultSurvey.map((result, index) => (
-        <div key={index}>
-          <p>
-            Question numéro : {result.questionNumber} | vous avez répondu :{' '}
-            {result.answerQuestion}
-          </p>
-        </div>
-      ))}
     </ContainerResult>
   )
 }

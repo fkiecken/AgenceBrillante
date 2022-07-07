@@ -1,10 +1,11 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import styledComponents from 'styled-components'
 import '../survey/style.css'
 import { Loader } from '../../utils/Atom'
 import { ThemeContext } from '../../utils/context'
 import { SurveyContext } from '../../utils/context'
+import { useFetch } from '../../utils/hooks'
 
 const ContainerSurvey = styledComponents.div`
 width: 60%;
@@ -47,24 +48,14 @@ transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
 const AnswerQuestionButton = styledComponents.button`
 width: 100px;
 height: 50px;
-<<<<<<< HEAD
-background-color: white;
-=======
->>>>>>> origin/dev
 border: solid 2px;
 border-color: #a0cecb;
 border-radius: 30px;
 margin: 60px;
 cursor:pointer;
 transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
-<<<<<<< HEAD
-&:active {
-  background-color: black;
-}
-=======
 background-color: ${({ backgroundColorAnswerButton }) =>
   backgroundColorAnswerButton === false ? 'white' : '#a0cecb'};
->>>>>>> origin/dev
 `
 
 function Survey() {
@@ -72,22 +63,12 @@ function Survey() {
   const questionNumberInt = parseInt(questionNumber)
   const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1
   const nextQuestionNumber = questionNumberInt + 1
-  const [surveyData, setSurveyData] = useState({})
-  const [isDataLoading, setIsDataLoading] = useState(false)
   const { theme } = useContext(ThemeContext)
   const { resultSurvey } = useContext(SurveyContext)
   const [statutYesAnswerButton, setstatutYesAnswerButton] = useState(false)
   const [statutNoAnswerButton, setstatutNoAnswerButton] = useState(false)
-
-  useEffect(() => {
-    setIsDataLoading(true)
-    fetch('http://localhost:8000/survey')
-      .then((response) => response.json())
-      .then(({ surveyData }) => {
-        setSurveyData(surveyData)
-        setIsDataLoading(false)
-      })
-  }, [])
+  const { data, loading, error } = useFetch('http://localhost:8000/survey')
+  const { surveyData } = data
 
   function setAnswerQuestion(valueButton) {
     if (valueButton === 'oui') {
@@ -120,23 +101,22 @@ function Survey() {
     setstatutNoAnswerButton(false)
   }
 
+  if(error) {
+    return <span>Il y a eu un problème</span>
+  }
+
   return (
     <ContainerSurvey isDarkMode={theme}>
       <QuestionTitle>Question n°{questionNumber}</QuestionTitle>
-      {isDataLoading === true ? (
+      {loading === true ? (
         <div>
           <br />
           <Loader />
           <br />
         </div>
       ) : (
-        <ContainerQuestion>{surveyData[questionNumberInt]}</ContainerQuestion>
+        <ContainerQuestion>{surveyData && surveyData[questionNumberInt]}</ContainerQuestion>
       )}
-<<<<<<< HEAD
-      <AnswerQuestionButton>Oui</AnswerQuestionButton>
-      <AnswerQuestionButton>Non</AnswerQuestionButton>
-      <br/>
-=======
       <AnswerQuestionButton
         backgroundColorAnswerButton={statutYesAnswerButton}
         onClick={() => setAnswerQuestion('oui')}
@@ -150,7 +130,6 @@ function Survey() {
         Non
       </AnswerQuestionButton>
       <br />
->>>>>>> origin/dev
       <Link to={`/survey/${prevQuestionNumber}`}>
         <ButtonQuestion onClick={() => resetAnswerButton()}>
           Précédent
