@@ -105,9 +105,19 @@ function Survey() {
     }
   }
 
-  function resetAnswerButton() {
-    setstatutYesAnswerButton(false)
-    setstatutNoAnswerButton(false)
+  function resetAnswerButton(typeButton) {
+    if (typeButton === 'next') {
+      if (statutYesAnswerButton === false && statutNoAnswerButton === false) {
+        alert('Vous devez saisir une réponse')
+        return
+      } else {
+        setstatutYesAnswerButton(false)
+        setstatutNoAnswerButton(false)
+      }
+    } else {
+      setstatutYesAnswerButton(false)
+      setstatutNoAnswerButton(false)
+    }
   }
 
   return (
@@ -136,13 +146,13 @@ function Survey() {
       </AnswerQuestionButton>
       <br />
       <Link to={`/survey/${prevQuestionNumber}`}>
-        <ButtonQuestion onClick={() => resetAnswerButton()}>
+        <ButtonQuestion onClick={() => resetAnswerButton('precedent')}>
           Précédent
         </ButtonQuestion>
       </Link>
       {questionNumberInt !== 6 ? (
         <Link to={`/survey/${nextQuestionNumber}`}>
-          <ButtonQuestion onClick={() => resetAnswerButton()}>
+          <ButtonQuestion onClick={() => resetAnswerButton('next')}>
             Suivant
           </ButtonQuestion>
         </Link>
