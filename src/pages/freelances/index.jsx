@@ -3,6 +3,7 @@ import { Loader } from '../../utils/Atom'
 import styledComponents from 'styled-components'
 import { useState, useEffect, useContext } from 'react'
 import { ThemeContext } from '../../utils/context'
+import { useFetch } from '../../utils/hooks'
 
 const ContainerFreelances = styledComponents.div`
 width: 60%;
@@ -25,28 +26,14 @@ margin: auto;
 `
 
 function Freelances() {
-  const [freelancersList, setfreelancersList] = useState({})
-  const [isDataLoading, setIsDataLoading] = useState(true)
   const { theme } = useContext(ThemeContext)
 
-  useEffect(() => {
-    setIsDataLoading(true)
-    fetch('http://localhost:8000/freelances')
-      .then((response) => response.json())
-      .then(({ freelancersList }) => {
-        setfreelancersList(freelancersList)
-        setIsDataLoading(false)
-      })
-      .catch((error) => {
-        console.log(error)
-        alert('PROBLEME DE DATA : ' + error)
-      })
-  }, [])
+  const { data, loading, error } = useFetch('http://localhost:8000/freelances')
 
   return (
     <ContainerFreelances isDarkMode={theme}>
       <h1>NOS INDÉPENDANTS 🙏🤸‍♂️💯🔥 : </h1>
-      {isDataLoading === true ? (
+      {loading === true ? (
         <div>
           <br />
           <Loader />
@@ -54,7 +41,7 @@ function Freelances() {
         </div>
       ) : (
         <ContainerAllCards>
-          {freelancersList.map((profile, index) => (
+          {data.freelancersList.map((profile, index) => (
             <Card
               key={profile.name + index}
               label={profile.job}

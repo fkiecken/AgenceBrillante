@@ -27,8 +27,9 @@ height: 50px;
 border-radius: 25px;
 border: none;
 color: white;
-cursor:pointer;
-background-color: #575757;
+cursor: pointer;
+background-color: #${({ isDarkMode }) =>
+  isDarkMode === 'light' ? 'E5E5E5' : '575757'};
 `
 
 function Footer() {
@@ -37,7 +38,7 @@ function Footer() {
   return (
     <FooterContainer isDarkMode={theme}>
       <Content>
-        <DarkModeButton onClick={() => toggleTheme()}>
+        <DarkModeButton isDarkMode={theme} onClick={() => toggleTheme()}>
           {theme === 'light' ? '☀️' : '🌙'}
         </DarkModeButton>
         <br />

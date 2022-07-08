@@ -23,10 +23,6 @@ width: 70%;
 margin: 0 auto;
 margin-top: 60px;
 `
-const NeededCompetences = styledComponents.span`
-color: #a0cecb;
-font-size: 24px;
-`
 const TitleH2 = styledComponents.span`
 color: black;
 font-size: 24px;
@@ -77,8 +73,6 @@ function Result() {
   if (error) {
     return <span>Il y a eu un problème</span>
   }
-
-  console.log(queryParams)
 
   return (
     <ContainerResult isDarkMode={theme}>
