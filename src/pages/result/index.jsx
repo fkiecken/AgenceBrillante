@@ -52,15 +52,15 @@ color: #a0cecb;
 
 function formatQueryParams(resultSurvey) {
   const answerNumbers = []
-  resultSurvey.map((result) => (
-    answerNumbers.push(result.questionNumber)
-  ))
-  
+  resultSurvey.map((result) => answerNumbers.push(result.questionNumber))
+
   return answerNumbers.reduce((previousParams, answerNumber, index) => {
-      const isFirstAnswer = index === 0
-      const separator = isFirstAnswer ? '' : '&'
-      if(resultSurvey[(answerNumber-1)].answerQuestion === 'oui') {
-      return `${previousParams}${separator}a${answerNumber}=${resultSurvey[answerNumber]}`
+    const isFirstAnswer = index === 0
+    const separator = isFirstAnswer ? '' : '&'
+    if (resultSurvey[answerNumber - 1].answerQuestion === 'oui') {
+      return `${previousParams}${separator}a${answerNumber}=1`
+    } else {
+      return `${previousParams}`
     }
   }, '')
 }
@@ -70,11 +70,15 @@ function Result() {
   const { resultSurvey } = useContext(SurveyContext)
   const queryParams = formatQueryParams(resultSurvey)
 
-  const { data, loading, error} = useFetch(
+  const { data, loading, error } = useFetch(
     `http://localhost:8000/results?${queryParams}`
   )
 
- console.log(data)
+  if (error) {
+    return <span>Il y a eu un problème</span>
+  }
+
+  console.log(queryParams)
 
   return (
     <ContainerResult isDarkMode={theme}>
@@ -86,22 +90,22 @@ function Result() {
           Choisir quelqu'un possédant ses compétences !
         </ButtonChooseFreelance>
       </ContainerTitle>
-      {
-          loading === true ? (
-            <div>
-              <br />
-                <Loader />
-              <br />
-            </div>
-          ) : (
-            data.resultsData.map((comp) => (
-              <div>
-                <TitleDescription>{comp.title}</TitleDescription>
-                <p>{comp.description}</p>
-              </div>
-          ))
-          )
-        }
+      {loading === true ? (
+        <div>
+          <br />
+          <Loader />
+          <br />
+        </div>
+      ) : (
+        data.resultsData.map((comp) => (
+          <div>
+            <TitleDescription>{comp.title}</TitleDescription>
+            <ContainerCompetenceDescription>
+              {comp.description}
+            </ContainerCompetenceDescription>
+          </div>
+        ))
+      )}
       <br />
       <br />
     </ContainerResult>
