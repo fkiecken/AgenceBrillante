@@ -2,7 +2,7 @@ import styledComponents from 'styled-components'
 import { Link } from 'react-router-dom'
 import { ThemeContext, SurveyContext } from '../../utils/context'
 import { useContext } from 'react'
-import { useFetch } from '../../utils/hooks'
+import { useFetch, useTheme } from '../../utils/hooks'
 import { Loader } from '../../utils/Atom'
 
 const ContainerResult = styledComponents.div`
@@ -13,10 +13,11 @@ margin-top: 10px;
 border: 1px solid;
 border-radius: 30px;
 text-align: center;
-border-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
-background-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'fcfcfc' : '999999'};
+border-color: #${({ borderColor }) =>
+  borderColor ? borderColor : borderColor};
+background-color: #${({ backgroundColor }) =>
+  backgroundColor ? backgroundColor : backgroundColor};
+color: #${({ colorText }) => (colorText ? colorText : colorText)};
 `
 const ContainerTitle = styledComponents.div`
 width: 70%;
@@ -24,7 +25,7 @@ margin: 0 auto;
 margin-top: 60px;
 `
 const TitleH2 = styledComponents.span`
-color: black;
+color: #${({ colorText }) => (colorText ? colorText : colorText)};
 font-size: 24px;
 `
 const ButtonChooseFreelance = styledComponents(Link)`
@@ -63,6 +64,7 @@ function formatQueryParams(resultSurvey) {
 
 function Result() {
   const { theme } = useContext(ThemeContext)
+  const { backgroundColor, colorText, borderColor } = useTheme(theme)
   const { resultSurvey } = useContext(SurveyContext)
   const queryParams = formatQueryParams(resultSurvey)
 
@@ -74,15 +76,21 @@ function Result() {
     return <span>Il y a eu un problème</span>
   }
 
+  const FirstLetterUppercase = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
   return (
-    <ContainerResult isDarkMode={theme}>
+    <ContainerResult
+      backgroundColor={backgroundColor}
+      colorText={colorText}
+      borderColor={borderColor}
+    >
       <ContainerTitle>
-        <TitleH2>Les compétences dont vous avez besoin : </TitleH2>
+        <TitleH2 colorText={colorText}>
+          Les compétences dont vous avez besoin :{' '}
+        </TitleH2>
         <br />
-        <br />
-        <ButtonChooseFreelance to={'/freelances'}>
-          Choisir quelqu'un possédant ses compétences !
-        </ButtonChooseFreelance>
       </ContainerTitle>
       {loading === true ? (
         <div>
@@ -93,13 +101,20 @@ function Result() {
       ) : (
         data.resultsData.map((comp) => (
           <div>
-            <TitleDescription>{comp.title}</TitleDescription>
+            <TitleDescription>
+              {FirstLetterUppercase(comp.title)}
+            </TitleDescription>
             <ContainerCompetenceDescription>
               {comp.description}
             </ContainerCompetenceDescription>
           </div>
         ))
       )}
+      <br />
+      <ButtonChooseFreelance to={'/freelances'}>
+        Choisir quelqu'un possédant ses compétences !
+      </ButtonChooseFreelance>
+      <br />
       <br />
       <br />
     </ContainerResult>

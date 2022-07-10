@@ -1,9 +1,9 @@
 import Card from '../../components/Card'
 import { Loader } from '../../utils/Atom'
 import styledComponents from 'styled-components'
-import { useState, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { ThemeContext } from '../../utils/context'
-import { useFetch } from '../../utils/hooks'
+import { useFetch, useTheme } from '../../utils/hooks'
 
 const ContainerFreelances = styledComponents.div`
 width: 60%;
@@ -12,10 +12,10 @@ margin: auto;
 margin-top: 10px;
 border: 1px solid;
 border-radius: 30px;
-border-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
-background-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'fcfcfc' : '999999'};
+border-color: #${({ borderColor }) =>
+  borderColor ? borderColor : borderColor};
+background-color: #${({ backgroundColor }) =>
+  backgroundColor ? backgroundColor : backgroundColor};
 `
 const ContainerAllCards = styledComponents.div`
 display: grid;
@@ -27,11 +27,18 @@ margin: auto;
 
 function Freelances() {
   const { theme } = useContext(ThemeContext)
-
+  const { backgroundColor, borderColor } = useTheme(theme)
   const { data, loading, error } = useFetch('http://localhost:8000/freelances')
 
+  if (error) {
+    return <span>Il y a eu un problème</span>
+  }
+
   return (
-    <ContainerFreelances isDarkMode={theme}>
+    <ContainerFreelances
+      borderColor={borderColor}
+      backgroundColor={backgroundColor}
+    >
       <h1>NOS INDÉPENDANTS 🙏🤸‍♂️💯🔥 : </h1>
       {loading === true ? (
         <div>

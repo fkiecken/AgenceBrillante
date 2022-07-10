@@ -3,6 +3,7 @@ import styledComponents from 'styled-components'
 import { useContext } from 'react'
 import { ThemeContext } from '../../utils/context'
 import { Link } from 'react-router-dom'
+import { useTheme } from '../../utils/hooks'
 
 const ContainerHome = styledComponents.div`
   width: 60%;
@@ -10,12 +11,11 @@ const ContainerHome = styledComponents.div`
   margin: auto;
   margin-top: 10px;
   border: 1px solid;
-  border-color: #${({ isDarkMode }) =>
-    isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
-
+  border-color: #${({ borderColor }) =>
+    borderColor ? borderColor : borderColor};
+  background-color: #${({ backgroundColor }) =>
+    backgroundColor ? backgroundColor : backgroundColor};
   border-radius: 30px;
-  background-color: #${({ isDarkMode }) =>
-    isDarkMode === 'light' ? 'fcfcfc' : '999999'};
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
@@ -57,9 +57,10 @@ height: 100%
 
 function Home() {
   const { theme } = useContext(ThemeContext)
+  const { backgroundColor, borderColor } = useTheme(theme)
 
   return (
-    <ContainerHome isDarkMode={theme}>
+    <ContainerHome backgroundColor={backgroundColor} borderColor={borderColor}>
       <ContainerLeft>
         <Title>
           Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents

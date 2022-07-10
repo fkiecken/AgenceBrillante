@@ -5,7 +5,7 @@ import '../survey/style.css'
 import { Loader } from '../../utils/Atom'
 import { ThemeContext } from '../../utils/context'
 import { SurveyContext } from '../../utils/context'
-import { useFetch } from '../../utils/hooks'
+import { useFetch, useTheme } from '../../utils/hooks'
 
 const ContainerSurvey = styledComponents.div`
 width: 60%;
@@ -15,10 +15,11 @@ margin-top: 10px;
 border: 1px solid;
 border-radius: 30px;
 text-align: center;
-border-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'e9e9e9' : 'CFCFCF'};
-background-color: #${({ isDarkMode }) =>
-  isDarkMode === 'light' ? 'fcfcfc' : '999999'};
+border-color: #${({ borderColor }) =>
+  borderColor ? borderColor : borderColor};
+background-color: #${({ backgroundColor }) =>
+  backgroundColor ? backgroundColor : backgroundColor};
+color: #${({ colorText }) => (colorText ? colorText : colorText)};
 `
 const QuestionTitle = styledComponents.h2`
 text-decoration: underline;
@@ -34,7 +35,9 @@ padding: 40px;
 const ButtonQuestion = styledComponents.button`
 width: 200px;
 height: 100px;
-background-color: white;
+background-color: #${({ buttonColor }) =>
+  buttonColor ? buttonColor : buttonColor};
+color: #${({ colorText }) => (colorText ? colorText : colorText)};
 border: solid 2px;
 border-color: #a0cecb;
 border-radius: 30px;
@@ -54,8 +57,9 @@ border-radius: 30px;
 margin: 60px;
 cursor:pointer;
 transition: color 0.3s ease-in-out, box-shadow 0.5s ease-in-out;
-background-color: ${({ backgroundColorAnswerButton }) =>
-  backgroundColorAnswerButton === false ? 'white' : '#a0cecb'};
+background-color: #${({ buttonColor, backgroundColorAnswerButton }) =>
+  backgroundColorAnswerButton === false ? buttonColor : 'a0cecb'};
+color: #${({ colorText }) => (colorText ? colorText : colorText)}
 `
 
 function Survey() {
@@ -64,6 +68,8 @@ function Survey() {
   const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1
   const nextQuestionNumber = questionNumberInt + 1
   const { theme } = useContext(ThemeContext)
+  const { backgroundColor, borderColor, buttonColor, colorText } =
+    useTheme(theme)
   const { resultSurvey } = useContext(SurveyContext)
   const [statutYesAnswerButton, setstatutYesAnswerButton] = useState(false)
   const [statutNoAnswerButton, setstatutNoAnswerButton] = useState(false)
@@ -101,12 +107,16 @@ function Survey() {
     setstatutNoAnswerButton(false)
   }
 
-  if(error) {
+  if (error) {
     return <span>Il y a eu un problème</span>
   }
 
   return (
-    <ContainerSurvey isDarkMode={theme}>
+    <ContainerSurvey
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
+      colorText={colorText}
+    >
       <QuestionTitle>Question n°{questionNumber}</QuestionTitle>
       {loading === true ? (
         <div>
@@ -115,35 +125,51 @@ function Survey() {
           <br />
         </div>
       ) : (
-        <ContainerQuestion>{surveyData && surveyData[questionNumberInt]}</ContainerQuestion>
+        <ContainerQuestion>
+          {surveyData && surveyData[questionNumberInt]}
+        </ContainerQuestion>
       )}
       <AnswerQuestionButton
         backgroundColorAnswerButton={statutYesAnswerButton}
+        colorText={colorText}
+        buttonColor={buttonColor}
         onClick={() => setAnswerQuestion('oui')}
       >
         Oui
       </AnswerQuestionButton>
       <AnswerQuestionButton
         backgroundColorAnswerButton={statutNoAnswerButton}
+        colorText={colorText}
+        buttonColor={buttonColor}
         onClick={() => setAnswerQuestion('non')}
       >
         Non
       </AnswerQuestionButton>
       <br />
       <Link to={`/survey/${prevQuestionNumber}`}>
-        <ButtonQuestion onClick={() => resetAnswerButton()}>
+        <ButtonQuestion
+          onClick={() => resetAnswerButton()}
+          buttonColor={buttonColor}
+          colorText={colorText}
+        >
           Précédent
         </ButtonQuestion>
       </Link>
       {questionNumberInt !== 6 ? (
         <Link to={`/survey/${nextQuestionNumber}`}>
-          <ButtonQuestion onClick={() => resetAnswerButton()}>
+          <ButtonQuestion
+            onClick={() => resetAnswerButton()}
+            buttonColor={buttonColor}
+            colorText={colorText}
+          >
             Suivant
           </ButtonQuestion>
         </Link>
       ) : (
         <Link to="../result">
-          <ButtonQuestion>Résultats</ButtonQuestion>
+          <ButtonQuestion buttonColor={buttonColor} colorText={colorText}>
+            Résultats
+          </ButtonQuestion>
         </Link>
       )}
     </ContainerSurvey>

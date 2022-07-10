@@ -1,9 +1,12 @@
 import { useContext } from 'react'
 import { ThemeContext } from '../context'
 import { createGlobalStyle } from 'styled-components'
+import { useTheme } from '../../utils/hooks'
 
 function GlobalStyle() {
   const { theme } = useContext(ThemeContext)
+  const { backgroundColorBody } = useTheme(theme)
+
   const GlobalStyle = createGlobalStyle`
   div {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
@@ -16,11 +19,11 @@ function GlobalStyle() {
   }
 
   body {
-    background-color: ${({ isDarkMode }) => (isDarkMode ? '#585858' : 'white')}
+    background-color: ${backgroundColorBody};
   }
 `
 
-  return <GlobalStyle isDarkMode={theme === 'dark'} />
+  return <GlobalStyle />
 }
 
 export default GlobalStyle

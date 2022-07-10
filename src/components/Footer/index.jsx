@@ -1,14 +1,16 @@
 import { useContext } from 'react'
 import StyledComponent from 'styled-components'
 import { ThemeContext } from '../../utils/context'
+import { useTheme } from '../../utils/hooks'
 
 const FooterContainer = StyledComponent.div`
 width: 100%;
-height: 120px;
-background: ${({ isDarkMode }) =>
-  isDarkMode === 'light'
-    ? 'linear-gradient(90deg, rgba(255,255,255,1) 50%, rgba(252,252,252,1) 100%)'
-    : 'linear-gradient(180deg, rgba(142,142,142,1) 0%, rgba(88,88,88,1) 100%)'};
+height: 100%;
+background: ${({ gradientBackgroundFooter }) =>
+  gradientBackgroundFooter
+    ? gradientBackgroundFooter
+    : gradientBackgroundFooter};
+color: #${({ colorText }) => (colorText ? colorText : colorText)};
 border-top: 1px solid;
 border-color: #${({ isDarkMode }) =>
   isDarkMode === 'light' ? 'e9e9e9' : '303030'};
@@ -34,9 +36,14 @@ background-color: #${({ isDarkMode }) =>
 
 function Footer() {
   const { toggleTheme, theme } = useContext(ThemeContext)
+  const { gradientBackgroundFooter, colorText } = useTheme(theme)
 
   return (
-    <FooterContainer isDarkMode={theme}>
+    <FooterContainer
+      isDarkMode={theme}
+      gradientBackgroundFooter={gradientBackgroundFooter}
+      colorText={colorText}
+    >
       <Content>
         <DarkModeButton isDarkMode={theme} onClick={() => toggleTheme()}>
           {theme === 'light' ? '☀️' : '🌙'}
