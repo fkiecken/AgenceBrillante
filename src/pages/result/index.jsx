@@ -47,7 +47,7 @@ const TitleDescription = styledComponents.h2`
 color: #a0cecb;
 `
 
-function formatQueryParams(resultSurvey) {
+export function formatQueryParams(resultSurvey) {
   const answerNumbers = []
   resultSurvey.map((result) => answerNumbers.push(result.questionNumber))
 
@@ -60,6 +60,13 @@ function formatQueryParams(resultSurvey) {
       return `${previousParams}`
     }
   }, '')
+}
+
+export function formatJobList(title, listLenght, index) {
+  if (index === listLenght -1) {
+    return title
+  }
+  return `${title},`
 }
 
 function Result() {
