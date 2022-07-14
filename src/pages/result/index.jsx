@@ -62,13 +62,6 @@ export function formatQueryParams(resultSurvey) {
   }, '')
 }
 
-export function formatJobList(title, listLenght, index) {
-  if (index === listLenght -1) {
-    return title
-  }
-  return `${title},`
-}
-
 function Result() {
   const { theme } = useContext(ThemeContext)
   const { backgroundColor, colorText, borderColor } = useTheme(theme)
