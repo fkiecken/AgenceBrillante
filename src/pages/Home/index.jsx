@@ -63,7 +63,10 @@ function Home() {
     <ContainerHome backgroundColor={backgroundColor} borderColor={borderColor}>
       <ContainerLeft>
         <Title>
-          Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents
+          <h2>
+            Repérez vos besoins, on s'occupe du reste, avec les meilleurs
+            talents
+          </h2>
         </Title>
         <ButtonToSurvey to="/survey/1">Faire le test</ButtonToSurvey>
         <br />

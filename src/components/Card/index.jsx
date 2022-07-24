@@ -33,27 +33,30 @@ const ContainerCard = styledComponents.div`
     }
 `
 
-
-function Card({ label, title, picture}) {
-    return (
-        <ContainerCard>
-            <br/><CardLabel>{ label }</CardLabel><br/>
-            <ImageCard src={picture} alt="freelance"/><br/><br/>
-            <span>{ title }</span>
-        </ContainerCard>
-    )
+function Card({ label, title, picture }) {
+  return (
+    <ContainerCard>
+      <br />
+      <CardLabel>{label}</CardLabel>
+      <br />
+      <ImageCard src={picture} alt="freelance" />
+      <br />
+      <br />
+      <span>{title}</span>
+    </ContainerCard>
+  )
 }
 
 Card.propTypes = {
-    label : PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
 }
 
 Card.defaultProps = {
-    title: 'Mon titre par défaut',
-    label: 'Mon label par défaut',
-    picture : '../../assets/img/pitre.png'
+  title: 'Mon titre par défaut',
+  label: 'Mon label par défaut',
+  picture: '../../assets/img/pitre.png',
 }
 
 export default Card
