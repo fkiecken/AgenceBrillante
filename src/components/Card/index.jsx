@@ -42,7 +42,7 @@ function Card({ label, title, picture }) {
       <ImageCard src={picture} alt="freelance" />
       <br />
       <br />
-      <span>{title}</span>
+      <span data-testid="testTitle">{title}</span>
     </ContainerCard>
   )
 }
