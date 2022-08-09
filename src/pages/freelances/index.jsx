@@ -1,7 +1,7 @@
 import Card from '../../components/Card'
 import { Loader } from '../../utils/Atom'
 import styledComponents from 'styled-components'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ThemeContext } from '../../utils/context'
 import { useFetch, useTheme } from '../../utils/hooks'
 
@@ -24,16 +24,11 @@ width: 98%;
 height: auto;
 margin: auto;
 `
-const ButtonCard = styledComponents.button`
-border: none;
-background: none;
-`
 
 function Freelances() {
   const { theme } = useContext(ThemeContext)
   const { backgroundColor, borderColor } = useTheme(theme)
   const { data, loading, error } = useFetch('http://localhost:8000/freelances')
-  const [favoriteFreelance, setFavoriteFreelance] = useState()
 
   if (error) {
     return <span>Il y a eu un problème</span>
@@ -54,18 +49,12 @@ function Freelances() {
       ) : (
         <ContainerAllCards>
           {data.freelancersList.map((profile, index) => (
-            <ButtonCard key={index} onClick={() => setFavoriteFreelance(index)}>
-              <Card
-                key={profile.name + index}
-                label={profile.job}
-                picture={profile.picture}
-                title={
-                  index === favoriteFreelance
-                    ? '⭐ ' + profile.name + ' ⭐'
-                    : profile.name
-                }
-              />
-            </ButtonCard>
+            <Card
+              key={profile.name + index}
+              label={profile.job}
+              picture={profile.picture}
+              title={profile.name}
+            />
           ))}
         </ContainerAllCards>
       )}

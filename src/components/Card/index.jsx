@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useState } from 'react'
 import styledComponents from 'styled-components'
 
 const CardLabel = styledComponents.div`
@@ -32,18 +33,28 @@ const ContainerCard = styledComponents.div`
         color: white;
     }
 `
+const ButtonCard = styledComponents.button`
+border: none;
+background: none;
+`
 
 function Card({ label, title, picture }) {
+  const [favoriteFreelance, setFavoriteFreelance] = useState(false)
+
   return (
-    <ContainerCard>
-      <br />
-      <CardLabel>{label}</CardLabel>
-      <br />
-      <ImageCard src={picture} alt="freelance" />
-      <br />
-      <br />
-      <span data-testid="testTitle">{title}</span>
-    </ContainerCard>
+    <ButtonCard onClick={() => setFavoriteFreelance(!favoriteFreelance)}>
+      <ContainerCard>
+        <br />
+        <CardLabel>{label}</CardLabel>
+        <br />
+        <ImageCard src={picture} alt="freelance" />
+        <br />
+        <br />
+        <span data-testid="testTitle">
+          {favoriteFreelance === true ? '⭐ ' + title + ' ⭐' : title}
+        </span>
+      </ContainerCard>
+    </ButtonCard>
   )
 }
 
