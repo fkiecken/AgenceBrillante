@@ -31,7 +31,7 @@ function Freelances() {
   const { data, loading, error } = useFetch('http://localhost:8000/freelances')
 
   if (error) {
-    return <span>Il y a eu un problème</span>
+    return <span data-testid="error">{error}</span>
   }
 
   return (
@@ -43,7 +43,7 @@ function Freelances() {
       {loading === true ? (
         <div>
           <br />
-          <Loader />
+          <Loader data-testid="loader" />
           <br />
         </div>
       ) : (

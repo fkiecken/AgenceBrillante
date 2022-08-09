@@ -7,19 +7,23 @@ export function useFetch(url) {
 
   useEffect(() => {
     if (!url) return
+    setLoading(true)
     async function fetchData() {
       try {
         const response = await fetch(url)
-        const data = await response.json()
-        setData(data)
+        if (!response.ok) {
+          const { errorMessage } = await response.json()
+          throw new Error(errorMessage)
+        } else {
+          const data = await response.json()
+          setData(data)
+        }
       } catch (err) {
-        console.log(err)
-        setError(true)
+        setError(err.message)
       } finally {
-        setLoading(false)
       }
+      setLoading(false)
     }
-    setLoading(true)
     fetchData()
   }, [url])
 

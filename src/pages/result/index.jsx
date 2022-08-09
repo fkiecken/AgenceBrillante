@@ -99,8 +99,8 @@ function Result() {
           <br />
         </div>
       ) : (
-        data.resultsData.map((comp) => (
-          <div>
+        data.resultsData.map((comp, index) => (
+          <div key={comp.title + index}>
             <TitleDescription>
               {FirstLetterUppercase(comp.title)}
             </TitleDescription>

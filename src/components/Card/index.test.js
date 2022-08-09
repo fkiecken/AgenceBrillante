@@ -18,7 +18,7 @@ describe('Card Component', () => {
   })
   test('Title change when we add it on favorite', () => {
     render(<Card />)
-    const title = '⭐ Mon titre par défaut ⭐ '
+    const title = '⭐ Mon titre par défaut ⭐'
     const button = screen.getByRole('button')
     fireEvent.click(button)
     const titleCard = screen.getByTestId('testTitle')
