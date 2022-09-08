@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import StyledComponent from 'styled-components'
 import { ThemeContext } from '../../utils/context'
 import { useTheme } from '../../utils/hooks'
+import EmailInput from '../EmailInput'
 
 const FooterContainer = StyledComponent.div`
 width: 100%;
@@ -48,6 +49,8 @@ function Footer() {
         <DarkModeButton isDarkMode={theme} onClick={() => toggleTheme()}>
           {theme === 'light' ? '☀️' : '🌙'}
         </DarkModeButton>
+        <br /><br />
+        <EmailInput/>
         <br />
         <br />© AgenceBrillante 2022 - Tous droits réservés
         <br />

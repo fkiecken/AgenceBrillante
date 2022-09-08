@@ -1,8 +1,9 @@
 import Card from '../../components/Card'
 import { Loader } from '../../utils/Atom'
+import EmptyList from '../../components/EmptyList'
 import styledComponents from 'styled-components'
 import { useContext } from 'react'
-import { ThemeContext } from '../../utils/context'
+import { ThemeContext, SurveyContext } from '../../utils/context'
 import { useFetch, useTheme } from '../../utils/hooks'
 
 const ContainerFreelances = styledComponents.div`
@@ -29,12 +30,26 @@ function Freelances() {
   const { theme } = useContext(ThemeContext)
   const { backgroundColor, borderColor } = useTheme(theme)
   const { data, loading, error } = useFetch('http://localhost:8000/freelances')
+  const { resultSurvey } = useContext(SurveyContext)
+ 
+  var showMessagesEmptyListCompetence = false
+  if(resultSurvey != null) {
+    for(let i = 0; i < resultSurvey.length; i++) {
+      if(resultSurvey[i].answerQuestion === 'oui') {
+        showMessagesEmptyListCompetence = true
+      }
+    }
+  }
 
   if (error) {
     return <span data-testid="error">{error}</span>
   }
 
   return (
+    <div>
+    {
+        showMessagesEmptyListCompetence === false ? <EmptyList/> : null
+    }
     <ContainerFreelances
       borderColor={borderColor}
       backgroundColor={backgroundColor}
@@ -59,6 +74,7 @@ function Freelances() {
         </ContainerAllCards>
       )}
     </ContainerFreelances>
+    </div>
   )
 }
 

@@ -88,7 +88,7 @@ function Result() {
     >
       <ContainerTitle>
         <TitleH2 colorText={colorText}>
-          Les compétences dont vous avez besoin :{' '}
+          Les compétences dont vous avez besoin :
         </TitleH2>
         <br />
       </ContainerTitle>
