@@ -46,13 +46,13 @@ function Footer() {
       colorText={colorText}
     >
       <Content>
+        <EmailInput />
         <DarkModeButton isDarkMode={theme} onClick={() => toggleTheme()}>
           {theme === 'light' ? '☀️' : '🌙'}
         </DarkModeButton>
-        <br /><br />
-        <EmailInput/>
         <br />
         <br />© AgenceBrillante 2022 - Tous droits réservés
+        <br />
         <br />
       </Content>
     </FooterContainer>
