@@ -5,6 +5,7 @@ import styledComponents from 'styled-components'
 import { useContext } from 'react'
 import { ThemeContext, SurveyContext } from '../../utils/context'
 import { useFetch, useTheme } from '../../utils/hooks'
+import { Link } from 'react-router-dom'
 
 const ContainerFreelances = styledComponents.div`
 width: 60%;
@@ -31,11 +32,11 @@ function Freelances() {
   const { backgroundColor, borderColor } = useTheme(theme)
   const { data, loading, error } = useFetch('http://localhost:8000/freelances')
   const { resultSurvey } = useContext(SurveyContext)
- 
+
   var showMessagesEmptyListCompetence = false
-  if(resultSurvey != null) {
-    for(let i = 0; i < resultSurvey.length; i++) {
-      if(resultSurvey[i].answerQuestion === 'oui') {
+  if (resultSurvey != null) {
+    for (let i = 0; i < resultSurvey.length; i++) {
+      if (resultSurvey[i].answerQuestion === 'oui') {
         showMessagesEmptyListCompetence = true
       }
     }
@@ -47,33 +48,36 @@ function Freelances() {
 
   return (
     <div>
-    {
-        showMessagesEmptyListCompetence === false ? <EmptyList/> : null
-    }
-    <ContainerFreelances
-      borderColor={borderColor}
-      backgroundColor={backgroundColor}
-    >
-      <h1>NOS INDÉPENDANTS 🙏🤸‍♂️💯🔥 : </h1>
-      {loading === true ? (
-        <div>
-          <br />
-          <Loader data-testid="loader" />
-          <br />
-        </div>
-      ) : (
-        <ContainerAllCards>
-          {data.freelancersList.map((profile, index) => (
-            <Card
-              key={profile.name + index}
-              label={profile.job}
-              picture={profile.picture}
-              title={profile.name}
-            />
-          ))}
-        </ContainerAllCards>
-      )}
-    </ContainerFreelances>
+      {showMessagesEmptyListCompetence === false ? <EmptyList /> : null}
+      <ContainerFreelances
+        borderColor={borderColor}
+        backgroundColor={backgroundColor}
+      >
+        <h1>NOS INDÉPENDANTS 🙏🤸‍♂️💯🔥 : </h1>
+        {loading === true ? (
+          <div>
+            <br />
+            <Loader data-testid="loader" />
+            <br />
+          </div>
+        ) : (
+          <ContainerAllCards>
+            {data.freelancersList.map((profile, index) => (
+              <Link
+                key={`freelance-${profile.id}`}
+                to={`/profile/${profile.id}`}
+              >
+                <Card
+                  key={profile.name + index}
+                  label={profile.job}
+                  picture={profile.picture}
+                  title={profile.name}
+                />
+              </Link>
+            ))}
+          </ContainerAllCards>
+        )}
+      </ContainerFreelances>
     </div>
   )
 }

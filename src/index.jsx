@@ -4,6 +4,7 @@ import Survey from './pages/survey'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Error from './components/Error'
+import Profile from './components/Profile'
 import Result from './pages/result'
 import Freelances from './pages/freelances'
 import { ThemeProvider } from './utils/context'
@@ -27,6 +28,7 @@ root.render(
             <Route exact path="/survey/:questionNumber" element={<Survey />} />
             <Route exact path="/result" element={<Result />} />
             <Route exact path="/freelances" element={<Freelances />} />
+            <Route path="/profile/:id" element={<Profile />} />
             <Route path="*" element={<Error />} />
           </Routes>
           <Footer />
